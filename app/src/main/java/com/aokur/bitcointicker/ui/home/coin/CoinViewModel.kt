@@ -62,7 +62,7 @@ fun getCoinMarketEntity(coinMarketItemList: List<CoinMarketItem>): MutableList<C
     val databaseList = mutableListOf<CoinMarketEntity>()
     coinMarketItemList.forEach {
         val coinMarketEntity = CoinMarketEntity(
-            it.cryptoID,
+            it.coinId,
             it.currentPrice,
             it.highestPrice24h,
             it.cryptoImage,

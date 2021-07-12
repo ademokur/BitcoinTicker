@@ -2,6 +2,7 @@ package com.aokur.bitcointicker.data.repository
 
 import com.aokur.bitcointicker.data.db.dao.CoinDao
 import com.aokur.bitcointicker.data.db.entity.CoinMarketEntity
+import com.aokur.bitcointicker.data.model.CoinDetailItem
 import com.aokur.bitcointicker.data.model.CoinMarketItem
 import com.aokur.bitcointicker.data.remote.CoinApiService
 import com.aokur.bitcointicker.util.Resource
@@ -18,6 +19,10 @@ class CoinRepositoryImpl @Inject constructor(
 
     override suspend fun getAllCoins(): Flow<Resource<List<CoinMarketItem>>> = flow {
         emit(getResourceByNetworkRequest { coinApiService.getAllCoins() })
+    }
+
+    override suspend fun getCoinByID(id: String): Flow<Resource<CoinDetailItem>> = flow {
+        emit(getResourceByNetworkRequest { coinApiService.getCoinByID(id) })
     }
 
     override suspend fun insertAllCoins(listCrypto: List<CoinMarketEntity>): Flow<Resource<Unit>> =

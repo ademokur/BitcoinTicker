@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CoinMarketItem(
     @SerializedName("id")
-    val cryptoID: String,
+    val coinId: String,
 
     @SerializedName("current_price")
     val currentPrice: Double,

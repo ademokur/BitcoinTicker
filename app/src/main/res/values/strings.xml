@@ -4,4 +4,6 @@
     <string name="coin_loading">Coin Loading</string>
     <string name="coin_success">Coin Success</string>
     <string name="coin_error">Coin Error</string>
+    <string name="coin_lowest_price_24h">Lowest(24h)</string>
+    <string name="coin_highest_price_24h">Highest(24h)</string>
 </resources>

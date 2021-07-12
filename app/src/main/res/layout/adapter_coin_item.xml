@@ -28,8 +28,6 @@
             android:paddingTop="@dimen/margin_medium"
             android:paddingEnd="@dimen/margin_medium"
             android:paddingBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
             android:background="?android:selectableItemBackground">
 
             <androidx.appcompat.widget.AppCompatImageView

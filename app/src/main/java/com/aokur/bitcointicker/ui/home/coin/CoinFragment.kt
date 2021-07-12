@@ -3,6 +3,7 @@ package com.aokur.bitcointicker.ui.home.coin
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.aokur.bitcointicker.R
 import com.aokur.bitcointicker.databinding.FragmentCoinBinding
@@ -56,7 +57,7 @@ class CoinFragment: BaseFragment<FragmentCoinBinding>() {
         })
 
         coinAdapter.setOnItemClickListener {
-            //TODO redirect to coin details screen
+            findNavController().navigate(CoinFragmentDirections.actionCoinFragmentToCoinDetailFragment(it.coinId))
         }
 
         viewModel.allCoins.observe(viewLifecycleOwner) {
