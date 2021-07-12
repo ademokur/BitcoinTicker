@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.aokur.bitcointicker.R
 import com.aokur.bitcointicker.databinding.FragmentFavouriteCoinsBinding
 import com.aokur.bitcointicker.ui.base.BaseFragment
+import com.aokur.bitcointicker.ui.home.MainActivity
 import com.aokur.bitcointicker.util.Status
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,10 @@ class FavouriteCoinsFragment : BaseFragment<FragmentFavouriteCoinsBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
         binding.state = FavouriteCoinsViewState(Status.LOADING)
+
+        (requireActivity() as MainActivity).supportActionBar?.apply {
+            title = getString(R.string.favorites)
+        }
 
         binding.rvFavouriteCoinList.adapter = favouriteCoinAdapter
 

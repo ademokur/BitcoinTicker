@@ -12,6 +12,6 @@ interface CoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllCrypto(listCrypto: List<CoinMarketEntity>)
 
-    @Query("SELECT * FROM table_coin WHERE name LIKE :parameter OR symbol LIKE :parameter")
+    @Query("SELECT * FROM table_coin WHERE name LIKE '%' || :parameter || '%' OR symbol LIKE '%' || :parameter || '%'")
     suspend fun getCryptoByParameter(parameter: String): List<CoinMarketEntity>
 }

@@ -59,3 +59,23 @@ fun getCoinMarketEntity(coinMarketItemList: List<CoinMarketItem>): MutableList<C
     }
     return databaseList
 }
+
+fun getCoinMarketItems(coinMarketItemList: List<CoinMarketEntity>): MutableList<CoinMarketItem> {
+    val databaseList = mutableListOf<CoinMarketItem>()
+    coinMarketItemList.forEach {
+        val coinMarketEntity = CoinMarketItem(
+            it.cryptoID,
+            it.currentPrice,
+            it.highestPrice24h,
+            it.cryptoImage,
+            it.lastUpdated,
+            it.lowestPrice24h,
+            it.name,
+            it.priceChange24h,
+            it.priceChangePercentage24h,
+            it.symbol
+        )
+        databaseList.add(coinMarketEntity)
+    }
+    return databaseList
+}

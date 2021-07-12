@@ -34,5 +34,7 @@
     <string name="favourite_add_success">Successfully added to favorites.</string>
     <string name="favourite_delete_success">Successfully removed from favorites.</string>
     <string name="favourite_add_error">Failed to add.</string>
+    <string name="coin_search">Search</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

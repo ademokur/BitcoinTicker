@@ -24,6 +24,21 @@ class CoinViewModel @Inject constructor(private val coinRepository: CoinReposito
 
     private val _allCoins = MutableLiveData<Resource<List<CoinMarketItem>>>()
     val allCoins: LiveData<Resource<List<CoinMarketItem>>> = _allCoins
+    private val _coinByParameter = MutableLiveData<Resource<List<CoinMarketEntity>>>()
+    val coinByParameter: LiveData<Resource<List<CoinMarketEntity>>> = _coinByParameter
+
+    fun getCoinsByParameter(parameter: String) = viewModelScope.launch {
+        coinRepository.getCoinsByParameter(parameter.format())
+            .onStart {
+                _result.value = Result(loading = R.string.loading)
+            }
+            .catch {
+                Log.v("errorGetCoinByParameter", it.message.toString())
+            }
+            .collect {
+                _coinByParameter.value = it
+            }
+    }
 
     fun getAllCoins() = viewModelScope.launch {
         coinRepository.getAllCoins()

@@ -22,6 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        setSupportActionBar(binding.toolbar)
         navController = findNavController(R.id.nav_host_fragment)
 
         val popupMenu = PopupMenu(this, null)
@@ -31,8 +32,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.coinFragment || destination.id == R.id.favouriteCoinsFragment) {
                 showBottomNavigation()
+                supportActionBar?.apply {
+                    show()
+                }
             } else {
                 hideBottomNavigation()
+                supportActionBar?.apply {
+                    hide()
+                }
             }
         }
 
