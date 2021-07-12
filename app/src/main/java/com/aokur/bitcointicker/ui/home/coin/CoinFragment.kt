@@ -41,54 +41,60 @@ class CoinFragment: BaseFragment<FragmentCoinBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        binding.state = CoinViewState(Status.LOADING)
+        val sessionState = viewModel.checkIfUserLoggedIn()
+        if (sessionState) {
+            binding.state = CoinViewState(Status.LOADING)
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.swipeRefreshLayout.isRefreshing = true
-            viewModel.getAllCoins()
-        }
-
-        binding.coinRecyclerView.adapter = coinAdapter
-        coinAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                super.onItemRangeInserted(positionStart, itemCount)
-                binding.coinRecyclerView.smoothScrollToPosition(positionStart)
+            binding.swipeRefreshLayout.setOnRefreshListener {
+                binding.swipeRefreshLayout.isRefreshing = true
+                viewModel.getAllCoins()
             }
-        })
 
-        coinAdapter.setOnItemClickListener {
-            findNavController().navigate(CoinFragmentDirections.actionCoinFragmentToCoinDetailFragment(it.coinId))
-        }
+            binding.coinRecyclerView.adapter = coinAdapter
+            coinAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeInserted(positionStart, itemCount)
+                    binding.coinRecyclerView.smoothScrollToPosition(positionStart)
+                }
+            })
 
-        viewModel.allCoins.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    coinAdapter.submitList(it.data)
-                    viewModel.insertAllCoins(it.data!!)
-                    binding.swipeRefreshLayout.isRefreshing = false
+            coinAdapter.setOnItemClickListener {
+                findNavController().navigate(CoinFragmentDirections.actionCoinFragmentToCoinDetailFragment(it.coinId))
+            }
+
+            viewModel.allCoins.observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        coinAdapter.submitList(it.data)
+                        viewModel.insertAllCoins(it.data!!)
+                        binding.swipeRefreshLayout.isRefreshing = false
+                    }
+                }
+                binding.state = CoinViewState(it.status)
+            }
+
+            prefManager.getRefreshInterval()?.let {
+                this.lifecycleScope.launch(Dispatchers.IO) {
+                    while (true) {
+                        viewModel.getAllCoins()
+                        delay(Integer.parseInt(it).toLong() * 1000)
+                    }
                 }
             }
-            binding.state = CoinViewState(it.status)
-        }
 
-        prefManager.getRefreshInterval()?.let {
-            this.lifecycleScope.launch(Dispatchers.IO) {
-                while (true) {
-                    viewModel.getAllCoins()
-                    delay(Integer.parseInt(it).toLong() * 1000)
+            networkController.isNetworkConnected.observe(viewLifecycleOwner) { internetConnected ->
+                if (internetConnected) {
+                    if (viewModel.allCoins.value?.data == null)
+                        viewModel.getAllCoins()
+                    else {
+                        binding.state = CoinViewState(Status.SUCCESS)
+                    }
                 }
+                else binding.state = CoinViewState(Status.ERROR)
             }
         }
-
-        networkController.isNetworkConnected.observe(viewLifecycleOwner) { internetConnected ->
-            if (internetConnected) {
-                if (viewModel.allCoins.value?.data == null)
-                    viewModel.getAllCoins()
-                else {
-                    binding.state = CoinViewState(Status.SUCCESS)
-                }
-            }
-            else binding.state = CoinViewState(Status.ERROR)
+        else {
+            findNavController().navigate(CoinFragmentDirections.actionCoinFragmentToLoginFragment())
         }
     }
 }

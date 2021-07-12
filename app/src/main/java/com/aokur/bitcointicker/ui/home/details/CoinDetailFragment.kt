@@ -1,9 +1,14 @@
 package com.aokur.bitcointicker.ui.home.details
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -23,7 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
+class CoinDetailFragment : BaseFragment<FragmentCoinDetailBinding>() {
 
     override val TAG: String
         get() = CoinDetailFragment::class.java.simpleName
@@ -31,6 +36,8 @@ class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
     private val viewModel: CoinDetailViewModel by viewModels()
 
     private val args by navArgs<CoinDetailFragmentArgs>()
+
+    private var isFavourite: Boolean = false
 
     private lateinit var coinID: String
 
@@ -43,6 +50,7 @@ class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
         coinID = args.coinId
+        viewModel.isFavourite(coinID)
 
         viewModel.getCoinByID(coinID)
         viewModel.coinInfo.observe(viewLifecycleOwner) {
@@ -50,6 +58,31 @@ class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
                 Status.SUCCESS -> setCoinDetails(it.data!!)
             }
             binding.state = CoinDetailViewState(it.status)
+        }
+
+        viewModel.isFavouriteAdded.observe(viewLifecycleOwner) {
+            if (it)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.favourite_add_success),
+                    Toast.LENGTH_LONG
+                ).show()
+        }
+
+        viewModel.isFavouriteDeleted.observe(viewLifecycleOwner) {
+            if (it)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.favourite_delete_success),
+                    Toast.LENGTH_LONG
+                ).show()
+        }
+
+        viewModel.isFavourite.observe(viewLifecycleOwner) {
+            if (it) {
+                isFavourite = it
+                binding.favoriteImageView.changeIconColor(isFavourite)
+            }
         }
 
         prefManager.getRefreshInterval()?.let {
@@ -62,6 +95,20 @@ class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
 
             edtInterval.setOnKeyListener(onKeyListener)
         }
+
+        binding.favoriteImageView.setOnClickListener {
+            changeFavoriteState(it)
+        }
+    }
+
+    private fun changeFavoriteState(v: View) {
+        if (isFavourite)
+            viewModel.deleteFavourite(coinID)
+        else
+            viewModel.addToFavourites(viewModel.coinInfo.value?.data!!)
+
+        isFavourite = !isFavourite
+        (v as ImageView).changeIconColor(isFavourite)
     }
 
     private fun setCoinDetails(coinDetails: CoinDetailItem) {
@@ -75,7 +122,11 @@ class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
     private fun setRefreshInterval() {
         val refreshInterval = binding.edtInterval.text.toString()
         repeatRequestByRefreshInterval(Integer.parseInt(refreshInterval))
-        Toast.makeText(requireContext(), "All data and details will be refreshed every $refreshInterval seconds.", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            requireContext(),
+            "All data and details will be refreshed every $refreshInterval seconds.",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun repeatRequestByRefreshInterval(refreshInterval: Int) {
@@ -96,5 +147,14 @@ class CoinDetailFragment: BaseFragment<FragmentCoinDetailBinding>() {
             }
             return false
         }
+    }
+
+    private infix fun ImageView.changeIconColor(isFavourite: Boolean) {
+        val color = if (isFavourite) R.color.yellow else R.color.white
+
+        this.colorFilter = PorterDuffColorFilter(
+            ContextCompat.getColor(requireContext(), color),
+            PorterDuff.Mode.SRC_IN
+        )
     }
 }

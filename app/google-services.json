@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "52078729958",
+    "project_id": "bitcoin-ticker-f3980",
+    "storage_bucket": "bitcoin-ticker-f3980.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52078729958:android:0af11171e3637c8936f927",
+        "android_client_info": {
+          "package_name": "com.aokur.bitcointicker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52078729958-junrhcsvtriuhdocbcpln0vpm33kh3cj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIHVhmg5Ug97wIMulJEcA9KK_bkyAWwss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52078729958-junrhcsvtriuhdocbcpln0vpm33kh3cj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

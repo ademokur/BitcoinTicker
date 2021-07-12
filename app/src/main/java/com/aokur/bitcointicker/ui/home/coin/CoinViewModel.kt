@@ -56,6 +56,10 @@ class CoinViewModel @Inject constructor(private val coinRepository: CoinReposito
                 }
             }
     }
+
+    fun checkIfUserLoggedIn(): Boolean {
+        return firebaseAuth.currentUser != null
+    }
 }
 
 fun getCoinMarketEntity(coinMarketItemList: List<CoinMarketItem>): MutableList<CoinMarketEntity> {
