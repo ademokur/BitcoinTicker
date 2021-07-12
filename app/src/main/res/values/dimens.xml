@@ -7,4 +7,6 @@
     <dimen name="height_line_min">1dp</dimen>
     <dimen name="text_size_min">12sp</dimen>
     <dimen name="margin_big">16dp</dimen>
+    <dimen name="margin_max">24dp</dimen>
+    <dimen name="margin_profile_item">30dp</dimen>
 </resources>

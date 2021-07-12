@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -116,6 +117,16 @@ dependencies {
 
     // Swipe Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Firebase Storage
+    implementation "com.firebaseui:firebase-ui-storage:$firebaseui_version"
+
+    // Firebase Auth, CloudFirestore And Analytics
+    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
+    implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+    implementation platform("com.google.firebase:firebase-bom:$firebasebom_version")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "com.google.firebase:firebase-firestore-ktx:$firestore_version"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
