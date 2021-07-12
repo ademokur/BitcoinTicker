@@ -128,6 +128,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation "com.google.firebase:firebase-firestore-ktx:$firestore_version"
 
+    // Bottom Navigation Bar
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.8'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

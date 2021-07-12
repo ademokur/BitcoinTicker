@@ -30,4 +30,9 @@
     <string name="register_success">Registration successful</string>
     <string name="register_error">Registering..</string>
 
+    <!-- favourite -->
+    <string name="favourite_add_success">Successfully added to favorites.</string>
+    <string name="favourite_delete_success">Successfully removed from favorites.</string>
+    <string name="favourite_add_error">Failed to add.</string>
+
 </resources>

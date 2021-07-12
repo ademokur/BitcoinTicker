@@ -60,5 +60,15 @@
             app:popUpToInclusive="true" />
     </fragment>
 
+    <fragment
+        android:id="@+id/favouriteCoinsFragment"
+        android:name="com.aokur.bitcointicker.ui.home.favorite.FavouriteCoinsFragment"
+        android:label="Favourite Coins"
+        tools:layout="@layout/fragment_favourite_coins">
+        <action
+            android:id="@+id/action_favouriteCoinsFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment" />
+    </fragment>
+
 
 </navigation>

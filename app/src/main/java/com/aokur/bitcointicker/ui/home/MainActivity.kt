@@ -1,6 +1,8 @@
 package com.aokur.bitcointicker.ui.home
 
 import android.os.Bundle
+import android.view.View
+import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -21,9 +23,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
         navController = findNavController(R.id.nav_host_fragment)
+
+        val popupMenu = PopupMenu(this, null)
+        popupMenu.inflate(R.menu.menu_bottom)
+        val menu = popupMenu.menu
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.coinFragment || destination.id == R.id.favouriteCoinsFragment) {
+                showBottomNavigation()
+            } else {
+                hideBottomNavigation()
+            }
+        }
+
+        binding.bottomBar.setupWithNavController(menu, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    fun hideBottomNavigation() {
+        binding.bottomBar.visibility = View.GONE
+    }
+
+    fun showBottomNavigation() {
+        binding.bottomBar.visibility = View.VISIBLE
     }
 }
