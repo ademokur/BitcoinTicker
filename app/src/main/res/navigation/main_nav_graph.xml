@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/coinFragment">
+
+    <fragment
+        android:id="@+id/coinFragment"
+        android:name="com.aokur.bitcointicker.ui.home.coin.CoinFragment"
+        tools:layout="@layout/fragment_coin"
+        android:label="Coins">
+        <action
+            android:id="@+id/action_coinFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/coinDetailFragment"
+        android:name="com.aokur.bitcointicker.ui.home.details.CoinDetailFragment"
+        tools:layout="@layout/fragment_coin_detail"
+        android:label="Coin Details">
+        <argument
+            android:name="coinId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
