@@ -2,6 +2,8 @@ package com.aokur.bitcointicker.util
 
 object Constants {
 
+    const val BASE_COLLECTION_NAME = "Cryptocurrency"
+    const val DETAIL_COLLECTION_NAME = "listFavouriteCrypto"
     const val REFRESH_INTERVAL: String = "refresh_interval"
     const val PREF_NAME: String = "coin_prefs"
     const val DB_NAME: String = "coin.db"
