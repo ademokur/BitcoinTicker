@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bitcoin Ticker</string>
+    <string name="loading">Loading</string>
+    <string name="coin_loading">Coin Loading</string>
+    <string name="coin_success">Coin Success</string>
+    <string name="coin_error">Coin Error</string>
 </resources>
